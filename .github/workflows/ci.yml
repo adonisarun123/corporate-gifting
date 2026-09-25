@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://cgh_app:app@localhost:5432/cgh_test
+      DATABASE_URL_DIRECT: postgresql://cgh_owner:owner@localhost:5432/cgh_test
+      APP_DB_PASSWORD: app
+      AUTH_PROVIDER: dev
+      NODE_ENV: test
+      SESSION_SECRET: ci-session-secret-0123456789abcdef
+      QUOTE_LINK_SECRET: ci-quote-secret-0123456789abcdef
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Create owner role and database (mirrors Neon's non-superuser owner)
+        run: |
+          psql postgresql://postgres:postgres@localhost:5432/postgres -c "create role cgh_owner login password 'owner' createrole;"
+          psql postgresql://postgres:postgres@localhost:5432/postgres -c "create database cgh_test owner cgh_owner;"
+      - run: npm run typecheck
+      - run: npm run lint
+      - name: Apply migrations from scratch
+        run: npx tsx scripts/migrate.ts
+      - run: npm run test:unit
+      - run: npm run test:integration
+      - run: npm audit --audit-level=high --omit=dev
+      - name: Build
+        run: npm run build
+        env:
+          NODE_ENV: production
