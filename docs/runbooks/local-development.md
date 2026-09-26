@@ -30,7 +30,9 @@ Sign in at `/sign-in` (dev identity adapter) as `admin@cgh.local`, `manager@alph
 - `npm run test:integration` — the full §30 vertical slice plus AC-04/06/07/08/11/14/15/16/17/18 against a real database with RLS. Needs `.env.test` (see `.env.example`); `npm run db:reset-local -- --test` rebuilds the test schema.
 
 ## Production deploy (Vercel + Neon)
-1. Set env vars (see `.env.example`); `APP_ENV=production`, `AUTH_PROVIDER=clerk` with Clerk keys.
+Vercel project `corporate-gifting` (team arun-mahendrans-projects) builds `main`. Env vars are set on the project; empty values count as unset.
+Current stage: `APP_ENV=preview`, `AUTH_PROVIDER=dev` behind `DEV_LOGIN_PASSCODE` (deployed dev sign-in requires it), Vercel SSO protection on.
+1. Before go-live: `APP_ENV=production`, `AUTH_PROVIDER=clerk` with Clerk keys, real `EMAIL_FROM` + `RESEND_API_KEY`.
 2. Run `npx tsx scripts/migrate.ts` from ONE controlled job with `DATABASE_URL_DIRECT` (never from app instances).
 3. Deploy; hit `/api/v1/health`.
 4. Run the outbox dispatcher as a worker (or port `src/jobs/handlers.ts` into Inngest functions).

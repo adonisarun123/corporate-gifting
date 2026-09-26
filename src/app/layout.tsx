@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { env } from "@/lib/env";
+import { loadEnv } from "@/lib/env";
+
+function safeOrigin(): URL | undefined {
+  try {
+    return new URL(loadEnv().APP_ORIGIN);
+  } catch {
+    return undefined;
+  }
+}
 
 export const metadata: Metadata = {
-  metadataBase: new URL(env.APP_ORIGIN),
+  metadataBase: safeOrigin(),
   title: { default: "Corporate Gifting Hub", template: "%s · Corporate Gifting Hub" },
   description: "Corporate gifts and welcome kits selected around your occasion, quantity and budget. Shortlist, send requirements, receive a tailored quotation.",
   openGraph: { siteName: "Corporate Gifting Hub", type: "website" },

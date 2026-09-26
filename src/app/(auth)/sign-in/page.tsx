@@ -27,12 +27,16 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
         <form action={devSignIn} className="card mx-auto max-w-md space-y-4 p-6">
           <h1 className="text-xl font-bold">Sign in (development)</h1>
           <p className="text-sm text-ink-muted">Local identity adapter: choose a seeded user. Production uses Clerk with MFA; memberships and roles always come from the database.</p>
-          {error && <p className="field-error">Unknown user.</p>}
+          {error === "unknown" && <p className="field-error">Unknown user.</p>}
+          {error === "passcode" && <p className="field-error">Incorrect passcode.</p>}
           <input type="hidden" name="next" value={next ?? "/account"} />
           <label className="label" htmlFor="subject">User</label>
           <select id="subject" name="subject" className="input" required>
             {list.map((u) => <option key={u.subject} value={u.subject}>{u.name} · {u.email}{u.status !== "active" ? ` (${u.status})` : ""}</option>)}
           </select>
+          {process.env.VERCEL_ENV && (
+            <div><label className="label" htmlFor="passcode">Passcode</label><input id="passcode" name="passcode" type="password" className="input" required autoComplete="off" /><p className="help">Shared passcode for this preview environment.</p></div>
+          )}
           <button className="btn-primary w-full" type="submit">Sign in</button>
         </form>
       </main>

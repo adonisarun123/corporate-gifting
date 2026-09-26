@@ -16,6 +16,11 @@ import { resolveActorByUserId } from "@/modules/identity/service";
 /** Dev-only sign-in: picks a seeded user. Refuses outside AUTH_PROVIDER=dev. */
 export async function devSignIn(formData: FormData) {
   if (env.AUTH_PROVIDER !== "dev") throw new Error("Dev sign-in is disabled");
+  // On any deployed environment the picker is behind a shared passcode (set DEV_LOGIN_PASSCODE).
+  if (process.env.VERCEL_ENV) {
+    const supplied = String(formData.get("passcode") ?? "");
+    if (!env.DEV_LOGIN_PASSCODE || supplied !== env.DEV_LOGIN_PASSCODE) redirect("/sign-in?error=passcode");
+  }
   const subject = String(formData.get("subject") ?? "");
   const user = await withContextTransaction(systemContext(), (tx) => tx.query.users.findFirst({ where: eq(users.authSubject, subject) }), getDb());
   if (!user) redirect("/sign-in?error=unknown");
