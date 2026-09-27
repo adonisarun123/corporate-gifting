@@ -35,7 +35,7 @@ export function MobileNav({ groups, account }: { groups: NavGroup[]; account: Ar
             </form>
             <ul className="divide-y divide-border">
               {groups.map((g) => (
-                <li key={g.href} className="py-3">
+                <li key={g.label} className="py-3">
                   <Link href={g.href} className="block text-base font-semibold">{g.label}</Link>
                   {g.items && g.items.length > 0 && (
                     <ul className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1.5">
