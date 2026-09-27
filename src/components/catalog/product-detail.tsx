@@ -128,7 +128,7 @@ export function ProductDetail({ p, related = [] }: { p: PublicProductDetail; rel
 
       {related.length > 0 && (
         <section className="mt-16" aria-labelledby="related">
-          <div className="flex items-end justify-between gap-4"><div><p className="eyebrow">Related options</p><h2 id="related" className="h-section mt-2">Alternatives and companions</h2></div>{p.categorySlug && <Link href={`/categories/${p.categorySlug}`} className="btn-secondary">More in {p.categoryName}</Link>}</div>
+          <div className="flex flex-wrap items-end justify-between gap-4"><div><p className="eyebrow">Related options</p><h2 id="related" className="h-section mt-2">Alternatives and companions</h2></div>{p.categorySlug && <Link href={`/categories/${p.categorySlug}`} className="btn-secondary">More in {p.categoryName}</Link>}</div>
           <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">{related.slice(0, 4).map((r) => <ProductCard key={r.id} p={r} />)}</div>
         </section>
       )}

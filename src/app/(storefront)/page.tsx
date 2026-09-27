@@ -125,7 +125,7 @@ export default async function HomePage() {
               const img = CATEGORY_IMAGES[c.slug];
               return (
                 <li key={c.slug} className={i === 0 ? "col-span-2 row-span-2 sm:col-span-2 sm:row-span-2" : ""}>
-                  <Link href={`/categories/${c.slug}`} className="tile h-full min-h-[160px]" style={{ background: tileGradient(c.slug), aspectRatio: i === 0 ? undefined : "1 / 1" }}>
+                  <Link href={`/categories/${c.slug}`} className={`tile h-full ${i === 0 ? "min-h-[220px]" : ""}`} style={{ background: tileGradient(c.slug), aspectRatio: i === 0 ? undefined : "1 / 1" }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     {img && <img src={unsplash(img.id, i === 0 ? 1000 : 600, i === 0 ? 1000 : 600)} alt="" aria-hidden width={600} height={600} loading="lazy" />}
                     <span className="tile-scrim" />

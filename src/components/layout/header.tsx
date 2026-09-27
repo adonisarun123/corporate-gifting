@@ -24,7 +24,7 @@ export function TrustStrip() {
       <div className="marquee container-x">
         <ul className="marquee-track py-2 text-[11px] font-semibold uppercase tracking-[0.14em]">
           {items.map((t, i) => (
-            <li key={i} className="flex items-center gap-3 pr-10 whitespace-nowrap" aria-hidden={i >= TRUST.length}>
+            <li key={i} className={`flex shrink-0 items-center gap-3 pr-10 whitespace-nowrap${i >= TRUST.length ? " marquee-dup" : ""}`} aria-hidden={i >= TRUST.length || undefined}>
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />{t}
             </li>
           ))}
@@ -36,11 +36,11 @@ export function TrustStrip() {
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <Link href="/" className={`flex items-center gap-2.5 ${light ? "text-white" : "text-ink"}`} aria-label="Corporate Gifting Hub home">
+    <Link href="/" className={`flex shrink-0 items-center gap-2.5 ${light ? "text-white" : "text-ink"}`} aria-label="Corporate Gifting Hub home">
       <span className={`grid h-9 w-9 place-items-center rounded-[10px] ${light ? "bg-white text-brand-deep" : "bg-brand text-white"}`}>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M4 9h16v4H4zM6 13h12v7H6zM12 9v11" /><path d="M12 9c-2-4-6-4-6-1 0 1.5 2 1 6 1Zm0 0c2-4 6-4 6-1 0 1.5-2 1-6 1Z" /></svg>
       </span>
-      <span className="font-display text-[1.05rem] font-bold leading-none tracking-tight">Corporate Gifting<span className={light ? "text-accent" : "text-brand"}> Hub</span></span>
+      <span className="whitespace-nowrap font-display text-[1.05rem] font-bold leading-none tracking-tight">Corporate Gifting<span className={light ? "text-accent" : "text-brand"}> Hub</span></span>
     </Link>
   );
 }
