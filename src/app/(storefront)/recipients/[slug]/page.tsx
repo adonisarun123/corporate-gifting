@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { listPublishedProducts, listTaxonomy } from "@/modules/catalog/public";
-import { ListingGrid, parseListingSearchParams } from "@/components/catalog/listing";
-import { JsonLd, breadcrumbJsonLd } from "@/seo/jsonld";
+import { listTaxonomy } from "@/modules/catalog/public";
+import { parseListingSearchParams } from "@/components/catalog/listing";
+import { TaxonomyLanding } from "@/components/catalog/landing";
 
 type Props = { params: Promise<{ slug: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> };
 
@@ -22,15 +22,7 @@ export default async function Page({ params, searchParams }: Props) {
   const { slug } = await params;
   const term = await resolve(slug);
   if (!term) notFound();
-  const filters = parseListingSearchParams(await searchParams, { recipient: slug });
-  const result = await listPublishedProducts(filters);
-  return (
-    <div className="space-y-6">
-      <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Recipient", path: "/gifts" }, { name: term.name, path: `/recipients/${slug}` }])} />
-      <nav aria-label="Breadcrumb" className="text-sm text-ink-muted">Home / Recipient / {term.name}</nav>
-      <h1 className="text-2xl font-bold">{term.name}</h1>
-      {term.description && <p className="max-w-prose text-ink-muted">{term.description}</p>}
-      <ListingGrid {...result} basePath={`/recipients/${slug}`} query={{ sort: filters.sort }} />
-    </div>
-  );
+  const sp = await searchParams;
+  const filters = parseListingSearchParams(sp, { recipient: slug });
+  return <TaxonomyLanding kind="recipient" slug={slug} term={term} filters={filters} filtered={Object.keys(sp).some((k) => k !== "page")} />;
 }

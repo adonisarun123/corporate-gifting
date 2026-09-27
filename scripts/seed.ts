@@ -60,13 +60,13 @@ async function main() {
     vendorId: alpha.id, primaryCategorySlug: "drinkware", termSlugs: ["new-joiners", "employees", "onboarding", "conferences"],
     content: { name: "Insulated Steel Bottle", shortSummary: "A 750 ml double-wall insulated stainless steel bottle for desk and travel use, with laser engraving.", description: "Double-wall vacuum-insulated stainless steel bottle that keeps drinks cold for about 24 hours and hot for about 12. Leak-resistant screw cap, matte powder-coated finish and a generous engraving panel on the body. Widely used in onboarding kits and conference giveaways.", keyBenefits: ["Keeps drinks hot or cold for hours", "Large laser-engraving area", "Leak-resistant cap"], recipientSuitability: "New joiners, employees and event attendees who commute or travel.", limitations: "Not suitable for carbonated drinks. Hand wash recommended.", careInstructions: "Hand wash; do not microwave.", specifications: [{ name: "Capacity", value: "750", unit: "ml" }, { name: "Material", value: "Stainless steel 304" }, { name: "Weight", value: "320", unit: "g" }, { name: "Packaging", value: "Individual kraft box" }], brandingMethods: ["laser_engraving"], brandingNotes: "Single-position engraving up to 60 × 30 mm.", faqs: [{ question: "Can we engrave individual names?", answer: "Yes, name personalisation is quoted per unit and adds two working days." }] },
     variants: [{ label: "Navy, 750 ml", skuSuffix: "NV-750", options: { colour: "Navy", capacity: { value: 750, unit: "ml" } } }, { label: "Sage, 750 ml", skuSuffix: "SG-750", options: { colour: "Sage", capacity: { value: 750, unit: "ml" } } }],
-    media: [{ url: "https://placehold.co/1200x900/0F5B52/FFFFFF.png?text=Insulated+Steel+Bottle", altText: "Navy insulated steel bottle, front view" }],
+    media: [{ url: "https://images.unsplash.com/photo-1683383277379-644816d886e2?w=1200&h=900&fit=crop&q=80&auto=format", altText: "Navy insulated steel bottle, front view" }],
   }, db);
   const notebook = await proposeProduct(mgrA, {
     vendorId: alpha.id, primaryCategorySlug: "stationery", termSlugs: ["new-joiners", "employees", "onboarding"],
     content: { name: "Hardcover A5 Notebook", shortSummary: "A5 hardcover notebook with 192 ruled pages, ribbon marker and debossed logo option.", description: "Vegan-leather textured hardcover notebook with 192 ruled 80 gsm pages, elastic closure, ribbon marker and an expandable back pocket. Debossing on the front cover is included in the branding options.", keyBenefits: ["192 ruled pages", "Debossed logo up to 80 × 40 mm", "Elastic closure and ribbon marker"], recipientSuitability: "New joiners and employees.", specifications: [{ name: "Size", value: "A5" }, { name: "Pages", value: "192" }, { name: "Paper", value: "80 gsm ruled" }], brandingMethods: ["debossing", "foil_stamping"], faqs: [] },
     variants: [{ label: "Charcoal", skuSuffix: "CH", options: { colour: "Charcoal" } }],
-    media: [{ url: "https://placehold.co/1200x900/172B3A/FFFFFF.png?text=A5+Notebook", altText: "Charcoal A5 hardcover notebook" }],
+    media: [{ url: "https://images.unsplash.com/photo-1654124803453-5bb8819e1524?w=1200&h=900&fit=crop&q=80&auto=format", altText: "Charcoal A5 hardcover notebook" }],
   }, db);
   const tote = await proposeProduct(mgrB, {
     vendorId: beta.id, primaryCategorySlug: "bags", termSlugs: ["event-attendees", "conferences", "employees"],
@@ -98,7 +98,7 @@ async function main() {
     await tx.insert(schema.productTerms).values([{ productId: p!.id, termId: terms[0]!.id }, { productId: p!.id, termId: occ[0]!.id }]);
     const [cr] = await tx.insert(schema.comboRevisions).values({ comboProductId: p!.id, revisionNo: 1, comboType: "fixed", assemblyMode: "assembled", isCurrent: true, packaging: { name: "Kraft mailer box", dimensionsMm: [300, 220, 100] }, createdBy: ids.admin }).returning();
     await tx.insert(schema.comboComponents).values([{ comboRevisionId: cr!.id, variantId: bottleNavy, unitsPerKit: 1, sortOrder: 0 }, { comboRevisionId: cr!.id, variantId: notebook.variants[0]!.id, unitsPerKit: 1, sortOrder: 1 }]);
-    await tx.insert(schema.productMedia).values({ productId: p!.id, url: "https://placehold.co/1200x900/B98239/FFFFFF.png?text=Welcome+Kit", altText: "Welcome kit with bottle and notebook in a kraft box", isHero: true });
+    await tx.insert(schema.productMedia).values({ productId: p!.id, url: "https://images.unsplash.com/photo-1637904731042-2ef367b8c00c?w=1200&h=900&fit=crop&q=80&auto=format", altText: "Welcome kit with bottle and notebook in a kraft box", isHero: true });
     return { productId: p!.id, revisionId: rev!.id };
   }, db);
 

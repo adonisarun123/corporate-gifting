@@ -6,11 +6,12 @@ export default function NotFound() {
   return (
     <>
       <SiteHeader />
-      <main id="main" className="container-x py-16">
-        <div className="card mx-auto max-w-lg p-8 text-center">
-          <h1 className="text-2xl font-bold">Page not found</h1>
-          <p className="mt-2 text-sm text-ink-muted">The page may have moved or the product may no longer be listed.</p>
-          <Link href="/gifts" className="btn-primary mt-4">Browse gifts</Link>
+      <main id="main" className="container-x py-20">
+        <div className="card-elevated mx-auto max-w-lg p-10 text-center">
+          <p className="eyebrow justify-center">404</p>
+          <h1 className="h-section mt-3">Page not found</h1>
+          <p className="mt-3 text-ink-muted">The page may have moved or the product may no longer be listed. Discontinued gifts are kept only where a genuinely equivalent replacement exists.</p>
+          <div className="mt-6 flex justify-center gap-2"><Link href="/gifts" className="btn-primary">Browse gifts</Link><Link href="/search" className="btn-secondary">Search</Link></div>
         </div>
       </main>
       <SiteFooter />

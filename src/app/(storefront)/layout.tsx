@@ -5,7 +5,7 @@ export default function StorefrontLayout({ children }: { children: React.ReactNo
   return (
     <>
       <SiteHeader />
-      <main id="main" className="container-x py-8">{children}</main>
+      <main id="main">{children}</main>
       <SiteFooter />
     </>
   );

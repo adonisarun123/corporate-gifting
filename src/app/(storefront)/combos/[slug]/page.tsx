@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
-import { getPublishedProductBySlug } from "@/modules/catalog/public";
+import { getPublishedProductBySlug, listFiltersSchema, listPublishedProducts } from "@/modules/catalog/public";
 import { ProductDetail } from "@/components/catalog/product-detail";
 import { lookupRedirect } from "@/modules/catalog/redirects";
 
@@ -29,5 +29,6 @@ export default async function Page({ params }: Props) {
     notFound();
   }
   if (p.kind !== "combo") permanentRedirect(`/gifts/${p.slug}`);
-  return <ProductDetail p={p} />;
+  const related = await listPublishedProducts(listFiltersSchema.parse({ kind: "combo", sort: "newest" }));
+  return <ProductDetail p={p} related={related.items.filter((r) => r.id !== p.id)} />;
 }

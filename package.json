@@ -2,7 +2,7 @@
   "name": "corporate-gifting",
   "version": "0.1.0",
   "private": true,
-  "description": "Corporate Gifting Hub — enquiry-led B2B gifting platform (Next.js, Neon PostgreSQL, Drizzle)",
+  "description": "Corporate Gifting Hub \u2014 enquiry-led B2B gifting platform (Next.js, Neon PostgreSQL, Drizzle)",
   "engines": {
     "node": ">=22.12.0"
   },
@@ -20,7 +20,8 @@
     "db:reset-local": "tsx scripts/reset-local.ts",
     "db:generate": "drizzle-kit generate",
     "jobs:dispatch": "tsx scripts/dispatch-outbox.ts",
-    "check": "npm run typecheck && npm run lint && npm run test:unit"
+    "check": "npm run typecheck && npm run lint && npm run test:unit",
+    "db:seed:demo": "tsx scripts/seed-demo.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "5.9.1",
