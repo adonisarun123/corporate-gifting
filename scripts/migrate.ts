@@ -5,13 +5,14 @@
  */
 import "dotenv/config";
 import { Pool } from "pg";
+import { normalizeSslMode } from "../src/db/connection-url";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 
 async function main() {
   const url = process.env.DATABASE_URL_DIRECT;
   if (!url) throw new Error("DATABASE_URL_DIRECT is required for migrations");
-  const pool = new Pool({ connectionString: url, max: 1 });
+  const pool = new Pool({ connectionString: normalizeSslMode(url), max: 1 });
   const db = drizzle(pool);
   await migrate(db, { migrationsFolder: "src/db/migrations" });
 

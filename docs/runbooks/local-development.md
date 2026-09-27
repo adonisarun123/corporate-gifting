@@ -1,7 +1,7 @@
 # Runbook — local development
 
 ## Prerequisites
-Node 22, PostgreSQL 16+ (or a Neon branch), npm.
+Node 24 (matches Vercel), PostgreSQL 16+ (or a Neon branch), npm.
 
 ## Database
 Two connection strings are required (spec §16):

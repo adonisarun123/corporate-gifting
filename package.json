@@ -2,9 +2,9 @@
   "name": "corporate-gifting",
   "version": "0.1.0",
   "private": true,
-  "description": "Corporate Gifting Hub \u2014 enquiry-led B2B gifting platform (Next.js, Neon PostgreSQL, Drizzle)",
+  "description": "Corporate Gifting Hub — enquiry-led B2B gifting platform (Next.js, Neon PostgreSQL, Drizzle)",
   "engines": {
-    "node": ">=22.12.0"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "next dev",
@@ -53,5 +53,9 @@
     "tsx": "4.23.15",
     "typescript": "5.9.3",
     "vitest": "5.0.2"
+  },
+  "allowScripts": {
+    "esbuild": false,
+    "unrs-resolver": false
   }
 }

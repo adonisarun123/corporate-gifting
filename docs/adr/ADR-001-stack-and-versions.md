@@ -6,7 +6,7 @@
 
 | Component | Version | Note |
 |---|---|---|
-| Node.js | 22.x LTS locally; Vercel runs 24.x (`engines` enforces `>=22.12`) | Both supported by Next 16 |
+| Node.js | 24.x everywhere (local, CI, Vercel); `engines` pins `24.x` so Vercel never auto-jumps a major | Both supported by Next 16 |
 | Next.js | 16.3.6 | App Router, server components |
 | React | 19.3.0 | |
 | TypeScript | 5.9.3 | `strict`, `noUncheckedIndexedAccess` |

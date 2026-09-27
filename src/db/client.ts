@@ -4,6 +4,7 @@ import { drizzle, type NodePgDatabase } from "drizzle-orm/node-postgres";
 import { sql } from "drizzle-orm";
 import * as schema from "./schema";
 import { env } from "@/lib/env";
+import { normalizeSslMode } from "./connection-url";
 
 export type Db = NodePgDatabase<typeof schema>;
 export type Tx = Parameters<Parameters<Db["transaction"]>[0]>[0];
@@ -17,7 +18,7 @@ const globalForDb = globalThis as unknown as { __cghPool?: Pool };
 export function getPool(): Pool {
   if (!globalForDb.__cghPool) {
     globalForDb.__cghPool = new Pool({
-      connectionString: env.DATABASE_URL,
+      connectionString: normalizeSslMode(env.DATABASE_URL),
       max: env.DB_POOL_MAX,
       idleTimeoutMillis: 10_000,
       connectionTimeoutMillis: 10_000,
